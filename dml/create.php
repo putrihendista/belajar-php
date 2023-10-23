@@ -277,6 +277,10 @@
 
         <form action="simpan.php" method="post">
         <div class="col-12">
+            <label for="product_code" class="form-label">Produk Kode</label>
+            <input type="text" class="form-control" id="product_code" name="product_code">
+        </div>
+        <div class="col-12">
             <label for="product_name" class="form-label">Nama Produk</label>
             <input type="text" class="form-control" id="product_name" name="product_name">
         </div>

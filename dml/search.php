@@ -38,9 +38,9 @@
           <i class="fas fa-search"></i>
         </a>
         <div class="navbar-search-block">
-          <form class="form-inline">
+          <form class="form-inline" action="" method="GET">
             <div class="input-group input-group-sm">
-              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" name = "search">
               <div class="input-group-append">
                 <button class="btn btn-navbar" type="submit">
                   <i class="fas fa-search"></i>
@@ -53,6 +53,15 @@
           </form>
         </div>
       </li>
+      <?php
+      include('koneksi.php');
+      $kata_kunci = $_GET['search'];
+
+      // $sql = "SELECT * FROM products 
+      //   WHERE product_name LIKE '%$kata_kunci%' 
+      //   OR category_id = '%$kata_kunci%' 
+      //   OR description LIKE '%$kata_kunci%'";
+      ?>
 
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
@@ -180,7 +189,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="index.php" class="nav-link">
+            <a href="../phpDasar2/dashboard.php" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -270,18 +279,18 @@
                       </th>
                   </tr>
               </thead>
-            <tbody>
-          <?php
-        include 'koneksi.php';
-        $per_page = 3;
-        $page = isset($_GET['page']) ? $_GET['page'] : 1;
-        $start = ($page - 1) * $per_page;
-        $query = "SELECT * FROM products LIMIT $start, $per_page";
-        // $query = "SELECT * FROM products";
-        $result = $conn->query($query);
+              <tbody>
+              <?php
 
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
+$per_page = 3;
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+$start = ($page - 1) * $per_page;
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+$sql = "SELECT * FROM products WHERE product_name LIKE '%$search%'OR category_id LIKE '%$search%' OR description LIKE '%$search%' LIMIT $start, $per_page";
+
+              $result = $conn->query($sql);
+              if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
                 echo "<td>" . $row['id'] . "</td>";
                 echo "<td>" . $row['product_code'] . "</td>";
@@ -306,6 +315,7 @@
         </div>
         <!-- /.card-body -->
       </div>
+
       <div class="pagination pagination-sm justify-content-center">
           <nav aria-label="Page navigation example">
             <ul class="pagination">
@@ -316,10 +326,9 @@
     $total_products = $total_pages_result->fetch_row()[0];
     $total_pages = ceil($total_products / $per_page);
 
-
     for ($i = 1; $i <= $total_pages; $i++) {
         echo "<li class='page-item" . ($page == $i ? " active" : "") . "'>";
-        echo "<a class='page-link' href='?page=$i'>$i";
+        echo "<a class='page-link' href='?page=$i&search=$kata_kunci'>$i";
         echo '<span aria-hidden="true">&raquo;</span>';
         echo "</a>";
         echo "</li>";
@@ -329,6 +338,7 @@
 
     $conn->close();
         ?>
+        
       <!-- /.card -->
 
     </section>

@@ -290,6 +290,10 @@
         <form action="update.php" method="post">
         <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
         <div class="col-12">
+            <label for="product_code" class="form-label">Kode Produk</label>
+            <input type="text" class="form-control" value="<?php echo $row['product_code']; ?>" name="product_code">
+        </div>
+        <div class="col-12">
             <label for="product_name" class="form-label">Nama Produk</label>
             <input type="text" class="form-control" value="<?php echo $row['product_name']; ?>" name="product_name">
         </div>
