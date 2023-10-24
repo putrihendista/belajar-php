@@ -158,7 +158,7 @@
     <!-- Brand Logo -->
     <a href="../../index3.html" class="brand-link">
       <img src="../AdminLTE/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Putri Dewi Hendista</span>
+      <span class="brand-text font-weight-light">Putri Shop</span>
     </a>
 
     <!-- Sidebar -->
@@ -276,9 +276,19 @@
         $per_page = 3;
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
         $start = ($page - 1) * $per_page;
-        $query = "SELECT * FROM products LIMIT $start, $per_page";
-        // $query = "SELECT * FROM products";
+        
+        $query = "SELECT products.id, products.product_code, products.product_name,
+        product_categories.category_name, products.price, products.stock,
+        products.description FROM products
+        INNER JOIN product_categories ON products.category_id = product_categories.id
+        LIMIT $start, $per_page";
         $result = $conn->query($query);
+        // $per_page = 3;
+        // $page = isset($_GET['page']) ? $_GET['page'] : 1;
+        // $start = ($page - 1) * $per_page;
+        // $query = "SELECT * FROM products LIMIT $start, $per_page";
+        // // $query = "SELECT * FROM products";
+        // $result = $conn->query($query);
 
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
@@ -286,7 +296,7 @@
                 echo "<td>" . $row['id'] . "</td>";
                 echo "<td>" . $row['product_code'] . "</td>";
                 echo "<td>" . $row['product_name'] . "</td>";
-                echo "<td>" . $row['category_id'] . "</td>";
+                echo "<td>" . $row['category_name'] . "</td>";
                 echo "<td>" . $row['price'] . "</td>";
                 echo "<td>" . $row['stock'] . "</td>";
                 echo "<td>" . $row['description'] . "</td>";

@@ -190,7 +190,7 @@
     <!-- Brand Logo -->
     <a href="../../index3.html" class="brand-link">
       <img src="../AdminLTE/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Putri Dewi Hendista</span>
+      <span class="brand-text font-weight-light">Putri Shop</span>
     </a>
 
     <!-- Sidebar -->
@@ -285,17 +285,30 @@
             <input type="text" class="form-control" id="product_name" name="product_name">
         </div>
         <div class="col-12">
-            <label for="description" class="form-label">Deskripsi</label>
-            <input type="text" class="form-control" id="description" name="description">
+          <label for="kategori" class="form-label">Kategori</label> <br>
+          <select class="form-control" id="kategori" aria-label="Default select example" name="kategori">
+        <?php
+        include('koneksi.php');
+        $sql_kategori = "SELECT id, category_name FROM product_categories";
+        $result_kategori = mysqli_query($conn, $sql_kategori);
+        while ($row = mysqli_fetch_assoc($result_kategori)) {
+            echo "<option value='" . $row['id'] . "'>" . $row['category_name'] . "</option>";
+        }
+        ?>
+         </select>
+        </div>
+        <div class="col-12">
+            <label for="deskripsi" class="form-label">Deskripsi</label>
+            <input type="text" class="form-control" id="deskripsi" name="deskripsi">
         </div>
         <div class="col-12">
             <label for="price" class="form-label">Harga</label>
             <input type="decimal" class="form-control" id="price" name="price">
         </div>
-        <div class="col-12">
+        <!-- <div class="col-12">
             <label for="category_id" class="form-label">Kategori Id</label>
             <input type="number" class="form-control" id="category_id" name="category_id">
-        </div>
+        </div> -->
         <div class="col-12">
             <label for="stock" class="form-label">Stok</label>
             <input type="number" class="form-control" id="stock" name="stock">

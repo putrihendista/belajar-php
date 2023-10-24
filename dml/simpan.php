@@ -1,17 +1,20 @@
 <?php
 include 'koneksi.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (isset($_POST['product_code']) && isset($_POST['product_name']) && 
+isset($_POST['kategori']) && isset($_POST['price']) && isset($_POST['stock']) 
+&& isset($_POST['deskripsi'])) {
     $kode_produk = $_POST['product_code'];
     $nama_produk = $_POST['product_name'];
-    $deskripsi = $_POST['description'];
+    $kategori = $_POST['kategori'];
+    $deskripsi = $_POST['deskripsi'];
     $harga = $_POST['price'];
-    $kategori_id = $_POST['category_id'];
     $stok = $_POST['stock'];
 
 
-    $query = "INSERT INTO products (product_code, product_name, description, price, category_id, stock) 
-    VALUES ('$kode_produk', '$nama_produk', '$deskripsi', '$harga', '$kategori_id', '$stok')";
+    $query = "INSERT INTO products (product_code, product_name, category_id, description, price, stock) 
+    VALUES ('$kode_produk', '$nama_produk', '$kategori', '$deskripsi', '$harga', '$stok')";
 
    if ($conn->query($query) === TRUE) {
         header('location: index.php');

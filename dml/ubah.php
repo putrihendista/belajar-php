@@ -190,7 +190,7 @@
     <!-- Brand Logo -->
     <a href="../../index3.html" class="brand-link">
       <img src="../AdminLTE/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Putri Dewi Hendista</span>
+      <span class="brand-text font-weight-light">Putri Shop</span>
     </a>
 
     <!-- Sidebar -->
@@ -278,13 +278,13 @@
             <?php
     include 'koneksi.php';
 
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
-        $query = "SELECT * FROM products WHERE id = $id";
-        $result = $conn->query($query);
+    $id = $_GET['id'];
+    $query = "SELECT * FROM products WHERE id = $id";
+    $result_produk = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result_produk);
 
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
+    $sql_kategori = "SELECT id, category_name FROM product_categories";
+    $result_kategori = mysqli_query($conn, $sql_kategori);
             ?>
             
         <form action="update.php" method="post">
@@ -298,6 +298,17 @@
             <input type="text" class="form-control" value="<?php echo $row['product_name']; ?>" name="product_name">
         </div>
         <div class="col-12">
+          <label for="kategori" class="form-label">Kategori</label> <br>
+          <select class="form-control" id="kategori" aria-label="Default select example" name="kategori">
+          <?php
+        while ($row_kategori = mysqli_fetch_assoc($result_kategori)) {
+            $selected = ($row['id_kategori'] == $row_kategori['id']) ? "selected" : "";
+            echo '<option value="' . $row_kategori['id'] . '" ' . $selected . '>' . $row_kategori['category_name'] . '</option>';
+        }
+        ?>
+    </select>
+        </div>
+        <div class="col-12">
             <label for="description" class="form-label">Deskripsi</label>
             <input type="text" class="form-control" value="<?php echo $row['description']; ?>" name="description">
         </div>
@@ -305,10 +316,10 @@
             <label for="price" class="form-label">Harga</label>
             <input type="decimal" class="form-control" value="<?php echo $row['price']; ?>" name="price">
         </div>
-        <div class="col-12">
+        <!-- <div class="col-12">
             <label for="category_id" class="form-label">Kategori Id</label>
             <input type="number" class="form-control" value="<?php echo $row['category_id']; ?>" name="category_id">
-        </div> 
+        </div>  -->
         <div class="col-12">
             <label for="stock" class="form-label">Stok</label>
             <input type="number" class="form-control" value="<?php echo $row['stock']; ?>" name="stock">
@@ -318,13 +329,6 @@
           <button class="btn btn-success float-right">Simpan</button>
         </div>
       </form>
-            <?php
-        } else {
-            echo "Produk tidak ditemukan.";
-        }
-    }
-    $conn->close();
-    ?>
     
     </section>
     <!-- /.content -->
