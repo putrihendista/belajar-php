@@ -12,9 +12,28 @@ isset($_POST['kategori']) && isset($_POST['price']) && isset($_POST['stock'])
     $harga = $_POST['price'];
     $stok = $_POST['stock'];
 
+    $imagePaths = [];
 
-    $query = "INSERT INTO products (product_code, product_name, category_id, description, price, stock) 
-    VALUES ('$kode_produk', '$nama_produk', '$kategori', '$deskripsi', '$harga', '$stok')";
+
+    if (!empty($_FILES['image']['name'][0])) {
+        $targetDirectory = "../files/";
+        if (!is_dir($targetDirectory)) {
+            mkdir($targetDirectory, 0777, true);
+        }
+    
+        foreach ($_FILES['image']['name'] as $key => $name) {
+            $targetFile = $targetDirectory . basename($name);
+            if (move_uploaded_file($_FILES['image']['tmp_name'][$key], $targetFile)) {
+                $imagePaths[] = $targetFile;
+            }
+        }
+    }
+
+// Simpan path gambar dalam bentuk JSON
+$imagePathsJSON = json_encode($imagePaths);
+
+    $query = "INSERT INTO products (product_code, image, product_name, category_id, description, price, stock) 
+    VALUES ('$kode_produk', '$imagePathsJSON', '$nama_produk', '$kategori', '$deskripsi', '$harga', '$stok')";
 
    if ($conn->query($query) === TRUE) {
         header('location: index.php');

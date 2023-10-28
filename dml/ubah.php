@@ -22,12 +22,8 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="../../index3.html" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
-      </li>
+
+</li>
     </ul>
 
     <!-- Right navbar links -->
@@ -212,7 +208,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="index.php" class="nav-link">
+            <a href="../tugas14/dashboard.php" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -229,6 +225,15 @@
               </p>
             </a>
           </li>
+          <!-- <li class="nav-item">
+            <a href="../PHPForm/login.php" class="nav-link">
+              <i class="nav-icon far fa-circle text-danger"></i>
+              <p>
+                Logout
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li> -->
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -287,11 +292,15 @@
     $result_kategori = mysqli_query($conn, $sql_kategori);
             ?>
             
-        <form action="update.php" method="post">
+        <form action="update.php" method="post" enctype="multipart/form-data">
         <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
         <div class="col-12">
             <label for="product_code" class="form-label">Kode Produk</label>
             <input type="text" class="form-control" value="<?php echo $row['product_code']; ?>" name="product_code">
+        </div>
+        <div class="col-12">
+            <label for="image" class="form-label">Gambar</label>
+            <input type="file" class="form-control" id="image"  name="image[]" id="image" multiple accept="image/*">
         </div>
         <div class="col-12">
             <label for="product_name" class="form-label">Nama Produk</label>

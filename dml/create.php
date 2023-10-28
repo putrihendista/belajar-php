@@ -22,12 +22,29 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="../../index3.html" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
-      </li>
+    <li class="nav-item mt-2">
+      <?php
+function konversi() {
+    date_default_timezone_set('Asia/Jakarta'); 
+    $hari = date('l'); 
+    $tanggal_waktu = date('Y-m-d H:i:s');
+    $hari_indonesia = [
+        'Sunday' => 'Minggu',
+        'Monday' => 'Senin',
+        'Tuesday' => 'Selasa',
+        'Wednesday' => 'Rabu',
+        'Thursday' => 'Kamis',
+        'Friday' => 'Jumat',
+        'Saturday' => 'Sabtu'
+    ];
+
+    $hari = $hari_indonesia[$hari];
+    return $hari . ', ' . date('d F Y H:i:s', strtotime($tanggal_waktu));
+}
+$hasil_konversi = konversi();
+echo $hasil_konversi;
+?>
+</li>
     </ul>
 
     <!-- Right navbar links -->
@@ -212,7 +229,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="index.php" class="nav-link">
+            <a href="../tugas14/dashboard.php" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -275,10 +292,14 @@
               </div>
             </div>
 
-        <form action="simpan.php" method="post">
+        <form action="simpan.php" method="post" enctype="multipart/form-data">
         <div class="col-12">
             <label for="product_code" class="form-label">Produk Kode</label>
             <input type="text" class="form-control" id="product_code" name="product_code">
+        </div>
+        <div class="col-12">
+            <label for="image" class="form-label">Gambar</label>
+            <input type="file" class="form-control" id="image"  name="image[]" id="image" multiple accept="image/*">
         </div>
         <div class="col-12">
             <label for="product_name" class="form-label">Nama Produk</label>

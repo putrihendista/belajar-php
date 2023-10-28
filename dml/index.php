@@ -22,14 +22,29 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="../../index3.html" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
-      </li>
-    </ul>
+    <?php
+function konversi() {
+    date_default_timezone_set('Asia/Jakarta'); 
+    $hari = date('l'); 
+    $tanggal_waktu = date('Y-m-d H:i:s');
+    $hari_indonesia = [
+        'Sunday' => 'Minggu',
+        'Monday' => 'Senin',
+        'Tuesday' => 'Selasa',
+        'Wednesday' => 'Rabu',
+        'Thursday' => 'Kamis',
+        'Friday' => 'Jumat',
+        'Saturday' => 'Sabtu'
+    ];
 
+    $hari = $hari_indonesia[$hari];
+    return $hari . ', ' . date('d F Y H:i:s', strtotime($tanggal_waktu));
+}
+$hasil_konversi = konversi();
+echo $hasil_konversi;
+?>
+</li>
+    </ul>
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
@@ -179,8 +194,8 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item">
-            <a href="index.php" class="nav-link">
+               <li class="nav-item">
+            <a href="../tugas14/dashboard.php" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -197,6 +212,15 @@
               </p>
             </a>
           </li>
+          <!-- <li class="nav-item">
+            <a href="../phpForm/login.php" class="nav-link">
+              <i class="nav-icon far fa-circle text-danger"></i>
+              <p>
+                Logout
+                <span class="right badge badge-danger"></span>
+              </p>
+            </a>
+          </li> -->
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -247,13 +271,16 @@
                   <th style="width: 5%">
                           No
                       </th>
-                      <th style="width: 15%">
+                      <th style="width: 15">
                           Kode Produk
+                      </th>
+                      <th style="width: 15%">
+                          Gambar
                       </th>
                       <th style="width: 15%">
                           Nama
                       </th>
-                      <th style="width: 15%;">
+                      <th style="width: 10%;">
                           Kategori
                       </th>
                       <th style="width: 10%;">
@@ -277,8 +304,8 @@
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
         $start = ($page - 1) * $per_page;
         
-        $query = "SELECT products.id, products.product_code, products.product_name,
-        product_categories.category_name, products.price, products.stock,
+        $query = "SELECT products.id, products.product_code, products.product_name, 
+        products.image, product_categories.category_name, products.price, products.stock,
         products.description FROM products
         INNER JOIN product_categories ON products.category_id = product_categories.id
         LIMIT $start, $per_page";
@@ -295,6 +322,18 @@
                 echo "<tr>";
                 echo "<td>" . $row['id'] . "</td>";
                 echo "<td>" . $row['product_code'] . "</td>";
+                echo "<td>";
+                if ($row['image'] !== null) {
+                  $imagePaths = json_decode($row['image']);
+                  if (!empty($imagePaths)) {
+                      echo "<div class='product'>";
+                      foreach ($imagePaths as $path) {
+                          echo "<img src='" . $path . "' alt='Product Image' width='100'>";
+                      }
+                      echo "</div>";
+                  }
+                }
+                echo "</td>";
                 echo "<td>" . $row['product_name'] . "</td>";
                 echo "<td>" . $row['category_name'] . "</td>";
                 echo "<td>" . $row['price'] . "</td>";
