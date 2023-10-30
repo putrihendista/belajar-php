@@ -66,7 +66,7 @@
         <a href="forgot-password.html">Lupa password</a>
       </p>
       <p class="mb-0">
-        <a href="register.html" class="text-center">Register</a>
+        <a href="register.php" class="text-center">Register</a>
       </p>
     </div>
     <!-- /.card-body -->

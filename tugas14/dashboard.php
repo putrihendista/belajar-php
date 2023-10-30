@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+// Periksa apakah pengguna sudah login
+if (!isset($_SESSION['username'])) {
+    header('Location: ../phpForm/login.php'); // Redirect ke halaman login jika belum login
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -204,7 +214,8 @@ echo $hasil_konversi;
           <img src="../assets/img/profile.jpeg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Putri Dewi Hendista</a>
+          <!-- <a href="#" class="d-block">Putri Dewi Hendista</a> -->
+          <a href="#" class="d-block"><?php echo $_SESSION['username']; ?></a>
         </div>
       </div>
 
@@ -223,11 +234,20 @@ echo $hasil_konversi;
             </a>
           </li>
           <li class="nav-item">
-            <a href="../DML/index.php" class="nav-link">
+            <a href="../dml/index.php" class="nav-link">
               <i class="nav-icon fa fa-cubes"></i>
               <p>
                 Products
                 <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="../PHPForm/logout.php" class="nav-link">
+              <i class="nav-icon far fa-circle text-danger"></i>
+              <p>
+                Logout
+                <span class="right badge badge-danger"></span>
               </p>
             </a>
           </li>
