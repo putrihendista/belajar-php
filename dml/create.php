@@ -339,8 +339,8 @@ echo $hasil_konversi;
          </select>
         </div>
         <div class="col-12">
-            <label for="deskripsi" class="form-label">Deskripsi</label>
-            <input type="text" class="form-control" id="deskripsi" name="deskripsi">
+            <label for="description" class="form-label">Deskripsi</label>
+            <input type="text" class="form-control" id="description" name="description">
         </div>
         <div class="col-12">
             <label for="price" class="form-label">Harga</label>
